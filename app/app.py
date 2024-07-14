@@ -1,17 +1,17 @@
-# Flask app
-import google.generativeai as genai
-from flask import Flask, render_template, request, jsonify
-from IPython.display import Markdown
-import markdown
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
-
+import google.generativeai as genai
+import markdown
 
 app = Flask(__name__)
+app.secret_key = 'AIzaSyCc_Mo21um64S5RnouVKUT7MLKfpUfjNZk'
+
+# Database connection
 
 
-def fetch_doctors():
-    # Establish connection to the database
-    db_connection = mysql.connector.connect(
+def get_db_connection():
+    return mysql.connector.connect(
         host="localhost",
         user="root",
         password="189@2003ihba",
@@ -19,26 +19,20 @@ def fetch_doctors():
         auth_plugin='mysql_native_password'
     )
 
-    # Create a cursor object to execute queries
+# Fetch doctors from the database
+
+
+def fetch_doctors():
+    db_connection = get_db_connection()
     cursor = db_connection.cursor()
-
-    # Define the SQL query
-    sql_query = "SELECT DoctorID, Name, Speciality FROM Doctors;"
-
-    # Execute the query
-    cursor.execute(sql_query)
-
-    # Fetch all rows
+    cursor.execute("SELECT DoctorID, Name, Speciality FROM Doctors;")
     rows = cursor.fetchall()
-
-    # Close cursor and database connection
     cursor.close()
     db_connection.close()
-
     return rows
 
 
-# Set up the API key
+# Set up the API key for the generative model
 genai.configure(api_key='AIzaSyCc_Mo21um64S5RnouVKUT7MLKfpUfjNZk')
 conversation_history = []
 message_limit = 50
@@ -46,12 +40,77 @@ conversation_count = 0
 
 
 @app.route('/')
+def home():
+    return render_template('home.html')
+
+# Login route
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        next_page = request.form['next']
+
+        db_connection = get_db_connection()
+        cursor = db_connection.cursor()
+        cursor.execute(
+            'SELECT password FROM Users WHERE username = %s', (username,))
+        user = cursor.fetchone()
+        cursor.close()
+        db_connection.close()
+
+        if user and check_password_hash(user[0], password):
+            session['username'] = username
+            return redirect(url_for(next_page))
+
+        return 'Invalid username or password'
+
+    next_page = request.args.get('next', 'home')
+    return render_template('login_signup.html', next=next_page)
+
+# Sign-up route
+
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    username = request.form['username']
+    password = request.form['password']
+    medical_history = request.form['medical_history']
+    next_page = request.form['next']
+
+    hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+
+    db_connection = get_db_connection()
+    cursor = db_connection.cursor()
+    cursor.execute(
+        'INSERT INTO Users (username, password, medical_history) VALUES (%s, %s, %s)',
+        (username, hashed_password, medical_history)
+    )
+    db_connection.commit()
+    cursor.close()
+    db_connection.close()
+
+    session['username'] = username
+    return redirect(url_for(next_page))
+
+# Protected route for index
+
+
+@app.route('/index')
 def index():
+    if 'username' not in session:
+        return redirect(url_for('login', next='index'))
     return render_template('index.html')
+
+# Protected route for appointment
 
 
 @app.route('/appointment')
-def index2():
+def appointment():
+    if 'username' not in session:
+        return redirect(url_for('login', next='appointment'))
     return render_template('appointment.html')
 
 
@@ -104,10 +163,6 @@ def ask():
 
 @app.route('/doubt', methods=['POST'])
 def doubt():
-    GOOGLE_API_KEY = 'AIzaSyCc_Mo21um64S5RnouVKUT7MLKfpUfjNZk'
-    genai.configure(api_key=GOOGLE_API_KEY)
-    model = genai.GenerativeModel('gemini-pro')
-
     user_message = request.form['user_message']
     conversation_history.append(f'You::: {user_message}')
 
@@ -115,15 +170,15 @@ def doubt():
     database_str = "\n".join(
         [f"{row[0]}. **{row[1]}** - *{row[2]}*" for row in rows])
     # Construct the prompt for Lyra
-    response = model.generate_content(f'''
-    Answer in One sentence,Refer the database of doctors availabel and tell the patient which Doctors are available or which Doctors they must book an appointment with, based on theor problem:
+    prompt = f'''
+    Answer in one sentence. Refer to the database of available doctors and tell the patient which doctors are available or which doctors they must book an appointment with, based on their problem:
     Database:
     {database_str}
 
     Patient problem: {user_message}
-    ''')
-
-    md_text = response.text
+    '''
+    response = genai.chat(messages=[prompt])
+    md_text = response.last
 
     # Convert markdown to html using the markdown function
     html = markdown.markdown(md_text)

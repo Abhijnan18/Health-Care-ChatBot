@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login or Sign Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Sign Up</title>
 </head>
 <body>
-    <h1>Login or Sign Up</h1>
-
-    <h2>Login</h2>
-    <form action="/login" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="hidden" name="next" value="{{ next }}">
-        <input type="submit" value="Login">
-    </form>
-
-    <h2>Sign Up</h2>
-    <form action="/signup" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br>
-        <label for="medical_history">Medical History:</label><br>
-        <textarea id="medical_history" name="medical_history"></textarea><br><br>
-        <input type="hidden" name="next" value="{{ next }}">
-        <input type="submit" value="Sign Up">
-    </form>
+    {% if login %}
+        <h1>Login</h1>
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="hidden" name="next" value="{{ next }}">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{{ url_for('signup', next=next) }}">Sign Up</a></p>
+    {% else %}
+        <h1>Sign Up</h1>
+        <form method="POST" action="{{ url_for('signup') }}">
+            <input type="hidden" name="next" value="{{ next }}">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+            <label for="medical_history">Medical History:</label>
+            <textarea name="medical_history" required></textarea>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login', next=next) }}">Login</a></p>
+    {% endif %}
 </body>
 </html>

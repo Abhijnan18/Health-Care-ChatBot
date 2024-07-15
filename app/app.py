@@ -5,7 +5,7 @@ import google.generativeai as genai
 import markdown
 
 app = Flask(__name__)
-app.secret_key = 'AIzaSyCc_Mo21um64S5RnouVKUT7MLKfpUfjNZk'
+app.secret_key = 'your_secret_key'
 
 # Database connection
 
@@ -41,6 +41,8 @@ conversation_count = 0
 
 @app.route('/')
 def home():
+    if 'username' in session:
+        return redirect(url_for('index'))
     return render_template('home.html')
 
 # Login route
@@ -48,6 +50,9 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'username' in session:
+        return redirect(url_for('index'))
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -67,33 +72,49 @@ def login():
 
         return 'Invalid username or password'
 
-    next_page = request.args.get('next', 'home')
-    return render_template('login_signup.html', next=next_page)
+    next_page = request.args.get('next', 'index')
+    return render_template('login_signup.html', next=next_page, login=True)
 
 # Sign-up route
 
 
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    username = request.form['username']
-    password = request.form['password']
-    medical_history = request.form['medical_history']
-    next_page = request.form['next']
+    if 'username' in session:
+        return redirect(url_for('index'))
 
-    hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        medical_history = request.form['medical_history']
+        next_page = request.form['next']
 
-    db_connection = get_db_connection()
-    cursor = db_connection.cursor()
-    cursor.execute(
-        'INSERT INTO Users (username, password, medical_history) VALUES (%s, %s, %s)',
-        (username, hashed_password, medical_history)
-    )
-    db_connection.commit()
-    cursor.close()
-    db_connection.close()
+        hashed_password = generate_password_hash(
+            password, method='pbkdf2:sha256')
 
-    session['username'] = username
-    return redirect(url_for(next_page))
+        db_connection = get_db_connection()
+        cursor = db_connection.cursor()
+        cursor.execute(
+            'INSERT INTO Users (username, password, medical_history) VALUES (%s, %s, %s)',
+            (username, hashed_password, medical_history)
+        )
+        db_connection.commit()
+        cursor.close()
+        db_connection.close()
+
+        session['username'] = username
+        return redirect(url_for(next_page))
+
+    next_page = request.args.get('next', 'index')
+    return render_template('login_signup.html', next=next_page, login=False)
+
+# Logout route
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))
 
 # Protected route for index
 

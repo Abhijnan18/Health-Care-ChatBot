@@ -6,17 +6,14 @@
     <title>Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Welcome to the Healthcare Chatbot</h1>
-    <p><a href="{{ url_for('login', next='index') }}">Login</a></p>
-    <p><a href="{{ url_for('signup', next='index') }}">Sign Up</a></p>
+<body class="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, " Liberation Mono", "Courier New" ,
+    monospace;">
     <div class="bg-white">
         <header class="absolute inset-x-0 top-0 z-50">
           <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
             <div class="flex lg:flex-1">
-              <a href="#" class="-m-1.5 p-1.5">
-                <span class="sr-only">Your Company</span>
-                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+              <a href="#" class="-m-1.5 p-1.5 h-8 w-auto">
+                <svg class="h-8 w-auto" fill="#4f46e5" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="#4f46e5"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M336.386,255.966L474.406,69.642L381.552,0H135.415L37.594,74.462l136.501,181.706L79.453,383.887L42.21,432.821 l81.123,0.584l22.16,78.041l37.247-48.94l72.717-100.447l77.854,101.011L370.574,512l22.158-78.033l81.13-0.586l-37.341-49.029 L336.386,255.966z M351.143,20.53l-39.706,54.595h-112.77L154.991,20.53H351.143z M296.135,95.654l-40.936,54.583l-40.936-54.583 H296.135z M66.262,78.442l67.601-51.46l51.758,64.697l56.689,75.586l-55.308,71.9L66.262,78.442z M255.189,328.088l-0.249-0.324 l-88.61,122.408l-12.305,16.166l-15.149-53.348l-55.467-0.4l12.461-16.373l99.217-133.891l60.008-78.01l0.103,0.138 l81.995-109.328h-0.372l39.064-53.712l69.876,52.408L315.312,249.929L255.189,328.088z M377.187,413.55l-15.151,53.356 l-12.429-16.321l-81.453-105.681l55.396-72.015l96.711,123.995l12.388,16.265L377.187,413.55z"></path> </g> </g> </g></svg>
               </a>
             </div>
             <div class="flex lg:hidden">
@@ -34,7 +31,7 @@
               <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
             </div>
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+              <a href="{{ url_for('login', next='index') }}" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
             </div>
           </nav>
           <!-- Mobile menu, show/hide based on menu open state. -->
@@ -44,8 +41,8 @@
             <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
               <div class="flex items-center justify-between">
                 <a href="#" class="-m-1.5 p-1.5">
-                  <span class="sr-only">Your Company</span>
-                  <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+                  <span class="sr-only">Lyra</span>
+                  <svg class="h-8 w-auto" fill="#4f46e5" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="#4f46e5"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M336.386,255.966L474.406,69.642L381.552,0H135.415L37.594,74.462l136.501,181.706L79.453,383.887L42.21,432.821 l81.123,0.584l22.16,78.041l37.247-48.94l72.717-100.447l77.854,101.011L370.574,512l22.158-78.033l81.13-0.586l-37.341-49.029 L336.386,255.966z M351.143,20.53l-39.706,54.595h-112.77L154.991,20.53H351.143z M296.135,95.654l-40.936,54.583l-40.936-54.583 H296.135z M66.262,78.442l67.601-51.46l51.758,64.697l56.689,75.586l-55.308,71.9L66.262,78.442z M255.189,328.088l-0.249-0.324 l-88.61,122.408l-12.305,16.166l-15.149-53.348l-55.467-0.4l12.461-16.373l99.217-133.891l60.008-78.01l0.103,0.138 l81.995-109.328h-0.372l39.064-53.712l69.876,52.408L315.312,249.929L255.189,328.088z M377.187,413.55l-15.151,53.356 l-12.429-16.321l-81.453-105.681l55.396-72.015l96.711,123.995l12.388,16.265L377.187,413.55z"></path> </g> </g> </g></svg>
                 </a>
                 <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
                   <span class="sr-only">Close menu</span>
@@ -63,7 +60,7 @@
                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</a>
                   </div>
                   <div class="py-6">
-                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+                    <a href="{{ url_for('login', next='index') }}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Login</a>
                   </div>
                 </div>
               </div>
@@ -71,18 +68,18 @@
           </div>
         </header>
       
-        <div class="relative isolate px-6 pt-14 lg:px-8">
+        <div class="relative isolate px-6 pt-36 lg:px-8">
           <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
             <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
           </div>
           <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             
             <div class="text-center">
-                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Lyra: Your Personalized Healthcare ChatBot</h1>
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"><span class="text-indigo-600">Lyra</span>, Your <span class="text-indigo-600">Personalized</span> Healthcare <span class="text-indigo-600">ChatBot</span></h1>
                 <p class="mt-6 text-lg leading-8 text-gray-600">Lyra revolutionizes healthcare with seamless interaction and personalized advice, ensuring timely care. Join us to make healthcare more accessible and efficient.</p>
                 <div class="mt-10 flex items-center justify-center gap-x-6">
-                  <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get Started</a>
-                  <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn More <span aria-hidden="true">→</span></a>
+                  <a href="{{ url_for('signup', next='index') }}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</a>
+                  <a href="{{ url_for('login', next='index') }}" class="text-sm font-semibold leading-6 text-gray-900">Log in<span aria-hidden="true">→</span></a>
                 </div>
               </div>
               

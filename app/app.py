@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
 import google.generativeai as genai
@@ -69,8 +69,9 @@ def login():
         if user and check_password_hash(user[0], password):
             session['username'] = username
             return redirect(url_for(next_page))
-
-        return 'Invalid username or password'
+        else:
+            flash('Invalid username or password')
+            return redirect(url_for('login', next=next_page))
 
     next_page = request.args.get('next', 'index')
     return render_template('login_signup.html', next=next_page, login=True)

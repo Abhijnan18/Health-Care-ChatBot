@@ -17,7 +17,7 @@
               </a>
             </div>
             <div class="flex lg:hidden">
-              <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+              <button id="menu-toggle" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
                 <span class="sr-only">Open main menu</span>
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -35,7 +35,7 @@
             </div>
           </nav>
           <!-- Mobile menu, show/hide based on menu open state. -->
-          <div class="lg:hidden" role="dialog" aria-modal="true">
+          <div id="sidebar" class="lg:hidden" role="dialog" aria-modal="true">
             <!-- Background backdrop, show/hide based on slide-over state. -->
             <div class="fixed inset-0 z-50"></div>
             <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
@@ -44,7 +44,7 @@
                   <span class="sr-only">Lyra</span>
                   <svg class="h-8 w-auto" fill="#4f46e5" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="#4f46e5"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M336.386,255.966L474.406,69.642L381.552,0H135.415L37.594,74.462l136.501,181.706L79.453,383.887L42.21,432.821 l81.123,0.584l22.16,78.041l37.247-48.94l72.717-100.447l77.854,101.011L370.574,512l22.158-78.033l81.13-0.586l-37.341-49.029 L336.386,255.966z M351.143,20.53l-39.706,54.595h-112.77L154.991,20.53H351.143z M296.135,95.654l-40.936,54.583l-40.936-54.583 H296.135z M66.262,78.442l67.601-51.46l51.758,64.697l56.689,75.586l-55.308,71.9L66.262,78.442z M255.189,328.088l-0.249-0.324 l-88.61,122.408l-12.305,16.166l-15.149-53.348l-55.467-0.4l12.461-16.373l99.217-133.891l60.008-78.01l0.103,0.138 l81.995-109.328h-0.372l39.064-53.712l69.876,52.408L315.312,249.929L255.189,328.088z M377.187,413.55l-15.151,53.356 l-12.429-16.321l-81.453-105.681l55.396-72.015l96.711,123.995l12.388,16.265L377.187,413.55z"></path> </g> </g> </g></svg>
                 </a>
-                <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                <button id="menu-close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
                   <span class="sr-only">Close menu</span>
                   <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -58,9 +58,6 @@
                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Marketplace</a>
                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</a>
-                  </div>
-                  <div class="py-6">
-                    <a href="{{ url_for('login', next='index') }}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Login</a>
                   </div>
                 </div>
               </div>
@@ -89,6 +86,20 @@
           </div>
         </div>
       </div>
+      <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const sidebar = document.getElementById('sidebar');
+    
+        menuToggle.addEventListener('click', () => {
+            sidebar.style.display = 'block';
+        });
+    
+        menuClose.addEventListener('click', () => {
+            sidebar.style.display = 'none';
+        });
+    </script>
+    
       
 </body>
 </html>

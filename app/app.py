@@ -19,6 +19,19 @@ def get_db_connection():
         auth_plugin='mysql_native_password'
     )
 
+# Fetch user information from the database
+
+
+def fetch_user_info(username):
+    db_connection = get_db_connection()
+    cursor = db_connection.cursor()
+    cursor.execute(
+        'SELECT username, medical_history FROM Users WHERE username = %s', (username,))
+    user_info = cursor.fetchone()
+    cursor.close()
+    db_connection.close()
+    return user_info
+
 # Fetch doctors from the database
 
 
@@ -141,6 +154,20 @@ def ask():
     global conversation_count
 
     user_message = request.form['user_message']
+    username = session.get('username')
+
+    if username:
+        user_info = fetch_user_info(username)
+        if user_info:
+            user_name = user_info[0]
+            medical_history = user_info[1]
+        else:
+            user_name = "User"
+            medical_history = "No medical history available."
+    else:
+        user_name = "User"
+        medical_history = "No medical history available."
+
     conversation_history.append(f'You::: {user_message}')
 
     # Construct the prompt for Lyra
@@ -161,12 +188,14 @@ def ask():
 
     The text delimited by single quotes is the conversation history please refer this to have context, and to avoid redundancy, referring this makes sure your conversations aren't repetitive: '{conversation_history}'
 
-    This is the current user message you are supposed to reply by referring to the conversation history if needed.
-
     ---
-    **User Message:** {user_message+" If this message is not related to health or medicince refuse to answer it."}
+    **User Information:**
+    Name: {user_name}
+    Medical History: {medical_history}
 
-    The response you provide must be short and concise, You are sticly prohibited from giving long responses.
+    **User Message:** {user_message} If this message is not related to health or medicine, refuse to answer it.
+
+    The response you provide must be short and concise. You are strictly prohibited from giving long responses.
     ---
     '''
     response = genai.chat(messages=[prompt])

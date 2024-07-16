@@ -48,36 +48,33 @@
 </head>
 
 <body
-    class="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, " Liberation Mono", "Courier New" ,
-    monospace; bg-gradient-to-r  p-3 from-indigo-50 via-violet-50 to-purple-50 overflow-x-hidden font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, 'Courier New', monospace;">
-    <div class="m-20 mt-10 mb-0 grid grid-cols-5 gap-4">
+    class=" bg-gradient-to-r  p-3 from-indigo-50 via-violet-50 to-purple-50 font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, " Liberation Mono", "Courier New" ,
+    monospace; overflow-x-hidden font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, 'Courier New', monospace;">
+    <div class="m-4 md:mt-32 md:mb-32 md:m-96 grid grid-cols-1 md:grid-cols-5 gap-4 overflow-y-hidden">
         
-        <div id="chat" class="col-span-3 scroll-smooth mb-3 shadow-xl rounded-xl bg-gradient-to-r from-indigo-50 via-purple-100 to-pink-50 min-h-[75vh] max-h-[75vh] relative pt-5 pb-5">
+        <div id="chat" class="col-span-5 scroll-smooth bg-transparent relative pt-5 pb-5">
 
-            <h1 class="text-center text-[40px] font-semibold leading-[52px]	text-indigo-600">Appointment AI</h1>
-            <div id="conversation" class=" mt-5 mb-2 overflow-y-scroll">
-                <div id="intro" class="text-center text-[20px] font-semibold leading-[26px] mt-[50%] mb-[50%] text-black">Stuck on choosing the right Specialist?<br> Let AI guide you!</div>
+            <h1 class="text-center text-[40px] font-semibold leading-[52px]	text-indigo-600">Symptom Checker</h1>
+            <div class="text-center text-[16px] md:text-[20px] font-normal leading-[20px] md:leading-[26px] mt-[3vh] text-gray-500">Powered by Lyra</div>
+            <div id="conversation" class="mt-5 mb-2 overflow-y-auto">
+                <div id="intro" class="text-center text-[20px] font-semibold leading-[26px] mt-[25%] mb-[25%] text-black">Stuck on choosing the right Specialist?<br> Let AI guide you!</div>
 
                 {% for message in conversation %}
                 {% if 'You:::' in message %}
-                <div class="max-w-[60%] mb-10  mr-2">
-                    <div class="user-message bg-indigo-600 text-white p-5 rounded-xl shadow-xl w-full">
-                        <p class="m-2 mt-0 ml-0 text-lg text-orange-100 font-semibold">You</p>{{ message.split(':::')[1]
-                        }}
+                <div class="max-w-[90%] mb-10 ml-auto mr-3 w-auto">
+                    <div class="user-message bg-indigo-600 text-white p-5 rounded-xl shadow-xl w-auto">
+                        <p class="m-2 mt-0 ml-0 text-sm md:text-lg text-orange-100 font-semibold">You</p>{{ message.split(':::')[1] }}
                     </div>
                 </div>
                 {% elif 'Lyra:::' in message %}
-                <div class="max-w-[60%] mb-10  ml-3">
-                    <div class="lyra-message bg-slate-100 p-5 rounded-xl shadow-xl border-[1px] h-auto w-full">
-                        <p class="m-2 mt-0 ml-0 text-lg text-indigo-700 font-semibold">Lyra</p>{{
-                        message.split(':::',1)[1] | safe }}
+                <div class="max-w-[90%] mb-10 mr-auto ml-3 w-auto">
+                    <div class="lyra-message bg-slate-100 rounded-xl shadow-xl border-[1px] h-auto p-6">
+                        <p class="m-2 mt-0 ml-0 text-sm md:text-lg text-indigo-700 font-semibold">Lyra</p>{{ message.split(':::',1)[1] | safe }}
                     </div>
-                
+                </div>
                 {% endif %}
                 {% endfor %}
             </div>
-
-
 
                 <div class="absolute bottom-0 p-4 mb-5 w-full">
                     <form method="post" action="/ask" class="flex justify-right items-center">
@@ -147,7 +144,7 @@
                     success: function (data) {
                         // Update the conversation dynamically
                         $('#conversation').find('.lyra-message:contains("Generating...")').remove(); // Remove "Generating..." message
-                        $('#conversation').append('<div class="max-w-[60%] mb-10 mr-auto ml-4"><div class="lyra-message bg-slate-100 p-5 rounded-xl shadow-xl border-[1px] h-auto p-6"><p class="m-2 mt-0 ml-0 text-lg text-indigo-700 font-semibold">Appointment AI</p>' + data.lyra_message.split(':::')[1] + '</div></div>');
+                        $('#conversation').append('<div class="max-w-[60%] mb-10 mr-auto ml-4"><div class="lyra-message bg-slate-100 p-5 rounded-xl shadow-xl border-[1px] h-auto p-6"><p class="m-2 mt-0 ml-0 text-lg text-indigo-700 font-semibold">Symptom Checker</p>' + data.lyra_message.split(':::')[1] + '</div></div>');
 
                         // Scroll to the bottom of the conversation
                         scrollToBottom();

@@ -43,23 +43,21 @@
     </style>
 </head>
 
-<body class="bg-gradient-to-r p-3 from-indigo-50 via-violet-50 to-purple-50 overflow-x-hidden font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, " Liberation Mono", "Courier New" ,
+<body class="bg-gradient-to-r  p-3 from-indigo-50 via-violet-50 to-purple-5 overflow-x-hidden font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, " Liberation Mono", "Courier New" ,
     monospace;">
     <p><a href="{{ url_for('logout') }}">Logout</a></p>
 
-    <div class="m-4 md:m-20 grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div id="chat" class="col-span-5 scroll-smooth mb-3">
+    <div class="m-4 md:mt-32 md:mb-32 md:m-96 grid grid-cols-1 md:grid-cols-5 gap-4 overflow-y-hidden">
+        <div id="chat" class="col-span-5 scroll-smooth mb-3 from-indigo-50 bg-gradient-to-r via-violet-50 to-purple-5">
             <div id="conversation" class="mt-5 mb-2 overflow-y-auto">
-                <h1 class="text-center text-[32px] md:text-[40px] font-semibold leading-[42px] md:leading-[52px] text-indigo-600">Lyra</h1>
-                <div class="text-center text-[16px] md:text-[20px] font-normal leading-[20px] md:leading-[26px] mt-[1vh] text-gray-500">Healthcare Chatbot</div>
+                <svg class="h-16 w-auto mx-auto" fill="#4f46e5" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="#4f46e5"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M336.386,255.966L474.406,69.642L381.552,0H135.415L37.594,74.462l136.501,181.706L79.453,383.887L42.21,432.821 l81.123,0.584l22.16,78.041l37.247-48.94l72.717-100.447l77.854,101.011L370.574,512l22.158-78.033l81.13-0.586l-37.341-49.029 L336.386,255.966z M351.143,20.53l-39.706,54.595h-112.77L154.991,20.53H351.143z M296.135,95.654l-40.936,54.583l-40.936-54.583 H296.135z M66.262,78.442l67.601-51.46l51.758,64.697l56.689,75.586l-55.308,71.9L66.262,78.442z M255.189,328.088l-0.249-0.324 l-88.61,122.408l-12.305,16.166l-15.149-53.348l-55.467-0.4l12.461-16.373l99.217-133.891l60.008-78.01l0.103,0.138 l81.995-109.328h-0.372l39.064-53.712l69.876,52.408L315.312,249.929L255.189,328.088z M377.187,413.55l-15.151,53.356 l-12.429-16.321l-81.453-105.681l55.396-72.015l96.711,123.995l12.388,16.265L377.187,413.55z"></path> </g> </g> </g></svg>
+                <div class="text-center text-[16px] md:text-[20px] font-normal leading-[20px] md:leading-[26px] mt-[3vh] text-gray-500">Lyra, Your Healthcare Chatbot</div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-[5vh] md:mt-[10vh] mb-[5vh] md:mb-[10vh]">
-                    <div id="prompt1" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">Can you recommend some exercises to improve flexibility?</div>
-                    <div id="prompt2" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">What are the symptoms of a heart attack and how should they be treated?</div>
-                    <div id="prompt3" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">How can I effectively manage stress in my daily life?</div>
-                    <div id="prompt4" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">What are the numerous benefits associated with regular physical activity?</div>
-                    <div id="prompt5" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">How can I improve my posture to prevent back pain and other issues?</div>
-                    <div id="prompt6" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">What are some practical tips for developing and maintaining healthy eating habits?</div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mt-[5vh] md:mt-[10vh] mb-[5vh] md:mb-[10vh]">
+                    <div id="prompt1" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">Give a Summary of My Medical History</div>
+                    <div id="prompt2" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">Learn About My Health Conditions</div>
+                    <div id="prompt3" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">Receive Diet and Nutrition Tips</div>
+                    <div id="prompt4" class="flex justify-center items-center rounded-xl p-3 md:p-5 text-sm md:text-base bg-gray-50 text-gray-900 font-semibold shadow-lg m-1 hover:border-2 hover:border-indigo-700 transition duration-300 ease-in-out border-2 border-transparent">Get Personalized Exercise Recommendations</div>
                 </div>
                 <div class="max-w-[90%] mb-10 mr-auto ml-3 w-auto">
                     <div class="lyra-message bg-slate-100 rounded-xl shadow-xl border-[1px] h-auto p-6">
@@ -83,12 +81,12 @@
                 {% endfor %}
             </div>
 
-            <div class="fixed bottom-0 w-full p-4 mb-5">
+            <div class="fixed bottom-0 w-full mb-5 max-w-[80%]">
                 <form method="post" action="/ask" class="flex justify-right items-center">
                     <label for="user_message" class="sr-only"></label>
                     <input type="text" id="user_message" name="user_message"
                         placeholder="Ask me anything about health...." required
-                        class="border-2 border-indigo-700 bg-white min-w-[80%] rounded-full p-4 opacity-100">
+                        class="border-2 border-indigo-700 bg-white min-w-[90%] md:min-w-[60%] rounded-full p-4 opacity-100">
                     <button type="submit"
                         class="p-4 ml-2 text-white bg-indigo-600 hover:bg-indigo-800 rounded-full">
                         <span><svg class="h-6 w-6" width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.3938 2.20468C3.70395 1.96828 4.12324 1.93374 4.4679 2.1162L21.4679 11.1162C21.7953 11.2895 22 11.6296 22 12C22 12.3704 21.7953 12.7105 21.4679 12.8838L4.4679 21.8838C4.12324 22.0662 3.70395 22.0317 3.3938 21.7953C3.08365 21.5589 2.93922 21.1637 3.02382 20.7831L4.97561 12L3.02382 3.21692C2.93922 2.83623 3.08365 2.44109 3.3938 2.20468ZM6.80218 13L5.44596 19.103L16.9739 13H6.80218ZM16.9739 11H6.80218L5.44596 4.89699L16.9739 11Z" fill="#fff"></path> </g></svg></span>
@@ -104,7 +102,7 @@
     <script>
         $(document).ready(function () {
             // Click event listeners for the prompt divs
-            $('#prompt1, #prompt2, #prompt3, #prompt4, #prompt5, #prompt6').click(function () {
+            $('#prompt1, #prompt2, #prompt3, #prompt4').click(function () {
                 // Get the text content of the clicked prompt
                 var promptText = $(this).text();
         

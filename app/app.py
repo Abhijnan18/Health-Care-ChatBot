@@ -123,6 +123,19 @@ def signup():
         medical_history = request.form['medical_history']
         next_page = request.form['next']
 
+        # Check if the username already exists
+        db_connection = get_db_connection()
+        cursor = db_connection.cursor()
+        cursor.execute(
+            'SELECT username FROM Users WHERE username = %s', (username,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            flash('Username already exists. Please choose a different username or login.')
+            cursor.close()
+            db_connection.close()
+            return redirect(url_for('signup', next=next_page))
+
         hashed_password = generate_password_hash(
             password, method='pbkdf2:sha256')
 
@@ -132,12 +145,8 @@ def signup():
         with open(filepath, 'w') as file:
             file.write(medical_history)
 
-        db_connection = get_db_connection()
-        cursor = db_connection.cursor()
-        cursor.execute(
-            'INSERT INTO Users (username, password, medical_history_path) VALUES (%s, %s, %s)',
-            (username, hashed_password, filepath)
-        )
+        cursor.execute('INSERT INTO Users (username, password, medical_history_path) VALUES (%s, %s, %s)',
+                       (username, hashed_password, filepath))
         db_connection.commit()
         cursor.close()
         db_connection.close()
@@ -156,7 +165,7 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
-# index route
+# Index route
 
 
 @app.route('/index')
@@ -209,7 +218,7 @@ def ask():
     prompt = f'''
     **Prompt:**
 
-    You are Lyra, a knowledgeable AI healthcare chatbot who acts like a Medical proffesional you are free to provide dieat and excericse tips. You were developed by Abhijnan. Your primary mission is to provide accurate and concise information solely in response to health-related queries.
+    You are Lyra, a knowledgeable AI healthcare chatbot who acts like a Medical professional. You are free to provide diet and exercise tips. You were developed by Abhijnan. Your primary mission is to provide accurate and concise information solely in response to health-related queries.
 
     1. **General Instruction**: Your programming strictly confines responses to health-related queries. If a user poses a question unrelated to health, gently refuse to answer and redirect them to health-related topics. Consistency in adhering to this instruction is vital.
 
@@ -223,10 +232,9 @@ def ask():
 
     **User Message:** {user_message} If this message is not related to health or medicine, refuse to answer it.
 
-    The response you provide must be short and concise. You are strictly prohibited from giving long responses. Refrain form greeting the user everytime
+    The response you provide must be short and concise. You are strictly prohibited from giving long responses. Refrain from greeting the user every time.
     ---
     This is the chat history for you to maintain context: {conversation_history}
-
     '''
 
     response = genai.chat(messages=[prompt])
@@ -236,7 +244,7 @@ def ask():
     html = markdown.markdown(md_text)
 
     # Append user input and Lyra's response to the conversation history
-    conversation_history.append(f'Lyra::: { html }')
+    conversation_history.append(f'Lyra::: {html}')
     conversation_count += 1
 
     # Return JSON response
@@ -249,25 +257,15 @@ def doubt():
     conversation_history.append(f'You::: {user_message}')
 
     rows = fetch_doctors()
-    database_str = "\n".join(
-        [f"{row[0]}" for row in rows])
+    database_str = "\n".join([f"{row[0]}" for row in rows])
     # Construct the prompt for Lyra
-    # prompt = f'''
-    # You must Answer in one sentence.The patient is going to tell his problem you must tell the patient what problem/conditon/disease they might have,
-    # Along with this You must tell the patient which of the medical proffesioanl below they must consult regarding their problem.
-    # Medical Proffesional list:
-    # {database_str}
-    # And aslo provide some tips to feel better if the patiet is sick
-
-    # Patient problem: {user_message}
-    # '''
     prompt = f'''
-    Respond in one sentence. Based on the users's described problem, identify the possible condition/disease, recommend a medical professional of the suitable speciality from the list below.
+    Respond in one sentence. Based on the user's described problem, identify the possible condition/disease, recommend a medical professional of the suitable speciality from the list below.
     Speciality of Medical Professional List:
     {database_str}
     
-    You are strictly prohibited form proiding long responses your responses must only be in a sentence
-    Users's Problem: {user_message}
+    You are strictly prohibited from providing long responses. Your responses must only be in a sentence.
+    User's Problem: {user_message}
     '''
 
     response = genai.chat(messages=[prompt])
@@ -277,7 +275,7 @@ def doubt():
     html = markdown.markdown(md_text)
 
     # Append user input and Lyra's response to the conversation history
-    conversation_history.append(f'Lyra::: { html }')
+    conversation_history.append(f'Lyra::: {html}')
 
     # Return JSON response
     return jsonify({'user_message': f'You::: {user_message}', 'lyra_message': f'Lyra::: {html}'})

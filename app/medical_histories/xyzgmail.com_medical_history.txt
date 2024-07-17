@@ -1,0 +1,43 @@
+Patient Information
+
+Name: John Doe
+Age: 42
+Gender: Male
+Date of Birth: 05/12/1982
+Occupation: Software Engineer
+
+Allergies
+Penicillin
+Shellfish
+Medications
+
+Lisinopril (for hypertension)
+Atorvastatin (for high cholesterol)
+Metformin (for type 2 diabetes)
+Medical History
+
+Childhood: Tonsillitis, chickenpox, measles
+Adult:
+Hypertension diagnosed at age 35
+Type 2 diabetes diagnosed at age 38
+High cholesterol diagnosed at age 40
+Appendectomy at age 22
+Minor car accident at age 28 (whiplash)
+Surgical History
+
+Appendectomy (2004)
+Immunizations
+
+Up-to-date on tetanus, diphtheria, pertussis (Tdap)
+Influenza vaccine (annual)
+Family History
+
+*Father: Heart disease, hypertension
+
+Mother: Osteoporosis, thyroid disease
+Siblings: None
+Lifestyle
+
+Smoker: No
+Alcohol: Social drinker
+Exercise: Sedentary lifestyle

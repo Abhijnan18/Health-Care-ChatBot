@@ -1,11 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 import mysql.connector
 import google.generativeai as genai
 import markdown
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+# Directory to save medical history files
+MEDICAL_HISTORY_DIR = 'medical_histories'
+os.makedirs(MEDICAL_HISTORY_DIR, exist_ok=True)
 
 # Database connection
 
@@ -26,11 +32,20 @@ def fetch_user_info(username):
     db_connection = get_db_connection()
     cursor = db_connection.cursor()
     cursor.execute(
-        'SELECT username, medical_history FROM Users WHERE username = %s', (username,))
+        'SELECT username, medical_history_path FROM Users WHERE username = %s', (username,))
     user_info = cursor.fetchone()
     cursor.close()
     db_connection.close()
-    return user_info
+
+    if user_info:
+        username, medical_history_path = user_info
+        if os.path.exists(medical_history_path):
+            with open(medical_history_path, 'r') as file:
+                medical_history = file.read()
+        else:
+            medical_history = "No medical history available."
+        return username, medical_history
+    return None
 
 # Fetch doctors from the database
 
@@ -106,11 +121,17 @@ def signup():
         hashed_password = generate_password_hash(
             password, method='pbkdf2:sha256')
 
+        # Save medical history to a file
+        filename = secure_filename(f"{username}_medical_history.txt")
+        filepath = os.path.join(MEDICAL_HISTORY_DIR, filename)
+        with open(filepath, 'w') as file:
+            file.write(medical_history)
+
         db_connection = get_db_connection()
         cursor = db_connection.cursor()
         cursor.execute(
-            'INSERT INTO Users (username, password, medical_history) VALUES (%s, %s, %s)',
-            (username, hashed_password, medical_history)
+            'INSERT INTO Users (username, password, medical_history_path) VALUES (%s, %s, %s)',
+            (username, hashed_password, filepath)
         )
         db_connection.commit()
         cursor.close()
@@ -184,22 +205,18 @@ def ask():
 
     4. **Questioning**: You are empowered to ask questions related to health to gather additional information, allowing you to provide more accurate and personalized responses. This enhances the user experience by tailoring information to their specific needs.
 
-    5. **Accessing Medical Records**: When users ask about their medical records, lab results, or other personal health information, ensure you provide accurate details based on the data available. Always respect their privacy and handle their information with care.
-
     Remember, your expertise lies in the health domain. Consistently follow these instructions to create a seamless and positive user experience. Refer to the conversation history for context as needed.
-
-    The text delimited by single quotes is the conversation history; please refer to this to have context, and to avoid redundancy, referring to this makes sure your conversations aren't repetitive: '{conversation_history}'
 
     ---
     **User Information:**
+    Name: {user_name}
     Medical History: {medical_history}
 
     **User Message:** {user_message} If this message is not related to health or medicine, refuse to answer it.
 
-    The response you provide must be short and concise. You are strictly prohibited from giving long responses. Answer in points whenever possible.
+    The response you provide must be short and concise. You are strictly prohibited from giving long responses.
     ---
     '''
-
     response = genai.chat(messages=[prompt])
     md_text = response.last
 
@@ -222,56 +239,14 @@ def doubt():
     rows = fetch_doctors()
     database_str = "\n".join(
         [f"{row[0]}. **{row[1]}** - *{row[2]}*" for row in rows])
-
-    username = session.get('username')
-    if username:
-        user_info = fetch_user_info(username)
-        if user_info:
-            user_name = user_info[0]
-            medical_history = user_info[1]
-        else:
-            user_name = "User"
-            medical_history = "No medical history available."
-    else:
-        user_name = "User"
-        medical_history = "No medical history available."
     # Construct the prompt for Lyra
-    # prompt = f'''
-    # Answer in one sentence. Refer to the database of available doctors and tell the patient which doctors are available or which doctors they must book an appointment with, based on their problem:
-    # Database:
-    # {database_str}
-
-    # Patient problem: {user_message}
-    # '''
     prompt = f'''
-**Prompt:**
+    Answer in one sentence. Refer to the database of available doctors and tell the patient which doctors are available or which doctors they must book an appointment with, based on their problem:
+    Database:
+    {database_str}
 
-You are Medisym, a highly knowledgeable AI symptom checker developed by Abhijnan. Your primary mission is to help users identify possible causes of their symptoms based on the information they provide, maintaining a friendly and empathetic tone throughout the conversation.
-
-1. **General Instruction**: Your programming strictly confines responses to symptom-related queries. If a user poses a question unrelated to their symptoms, gently refuse to answer and redirect them to symptom-related topics. Consistency in adhering to this instruction is vital.
-
-2. **Response Structure**: Create responses that are clear, informative, and relevant to the user's symptoms. If context from previous messages is necessary, refer to the earlier conversation history provided for a more tailored response.
-
-3. **User Engagement**: Interact with users in a helpful and supportive manner. Your duty is not only to provide information but also to guide users toward a better understanding of their symptoms. Ensure your communication reflects a positive and caring demeanor.
-
-4. **Questioning**: You are empowered to ask follow-up questions related to the user's symptoms to gather additional information, allowing you to provide more accurate and personalized responses. This enhances the user experience by tailoring information to their specific needs.
-
-5. **Symptom Analysis**: Use the information provided by the user to suggest possible causes of their symptoms. Offer advice on whether they should seek medical attention and provide general guidance on managing their symptoms.
-
-Remember, your expertise lies in symptom checking. Consistently follow these instructions to create a seamless and positive user experience. Refer to the conversation history for context as needed.
-
-The text delimited by single quotes is the conversation history; please refer to this to have context, and to avoid redundancy, referring to this makes sure your conversations aren't repetitive: '{conversation_history}'
-
----
-**User Information:**
-Relevant Medical History: {medical_history}
-
-**User Message with symptoms:** {user_message} If this message is not related to symptoms, refuse to answer it.
-
-The response you provide must be short and concise. You are strictly prohibited from giving long responses. Answer in points whenever possible.
----
-'''
-
+    Patient problem: {user_message}
+    '''
     response = genai.chat(messages=[prompt])
     md_text = response.last
 

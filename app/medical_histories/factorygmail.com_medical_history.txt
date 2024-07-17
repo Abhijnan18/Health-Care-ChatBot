@@ -1,0 +1,32 @@
+Patient: John Doe (Age: 42)
+
+Occupation: Assembly Line Worker (Auto Parts Factory) - 10 years
+
+Date: 2024-07-17
+
+Medical History
+Pre-employment: (2014) Routine physical exam for factory job. No major health concerns noted.
+Work-related injuries:
+2018: Repetitive strain injury (RSI) in right wrist due to repetitive assembly motions. Treated with physical therapy and pain medication.
+2021: Minor back strain from lifting a heavy object. Resolved with rest and medication.
+Ongoing conditions:
+Hearing: Gradual hearing loss in both ears likely due to prolonged exposure to machinery noise at work.
+Musculoskeletal: Lower back pain, especially after long shifts, possibly due to prolonged standing and bending on the assembly line.
+Medications: Ibuprofen (as needed) for back pain.
+Allergies: No known allergies.
+Social History: Non-smoker. Drinks alcohol occasionally.
+
+Family History:
+Mother - Hypertension
+Father - No significant health concerns
+
+Occupational Exposures:
+Routinely works with loud machinery (hearing protection provided, but not always worn comfortably).
+Occasionally exposed to dust from sanding and painting operations (wears mask when required).
+Lifts moderately heavy objects (up to 20 lbs) on a regular basis.
+
+Notes:
+Due to hearing loss, recommend annual audiometry testing to monitor progression.
+Encourage use of proper hearing protection to prevent further damage.
+Discuss ergonomics with patient to improve posture and reduce strain on lower back.
+Recommend participation in a workplace wellness program to promote healthy habits and injury prevention.

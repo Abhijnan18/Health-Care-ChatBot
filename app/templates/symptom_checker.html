@@ -50,6 +50,59 @@
 <body
     class=" bg-gradient-to-r  p-3 from-indigo-50 via-violet-50 to-purple-50 font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, " Liberation Mono", "Courier New" ,
     monospace; overflow-x-hidden font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, 'Courier New', monospace;">
+    <header class="absolute inset-x-0 top-0 z-50">
+        <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+          <div class="flex lg:flex-1">
+            <a href="{{ url_for('index') }}" class="-m-1.5 p-1.5 h-8 w-auto">
+              <svg class="h-8 w-auto" fill="#4f46e5" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="#4f46e5"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M336.386,255.966L474.406,69.642L381.552,0H135.415L37.594,74.462l136.501,181.706L79.453,383.887L42.21,432.821 l81.123,0.584l22.16,78.041l37.247-48.94l72.717-100.447l77.854,101.011L370.574,512l22.158-78.033l81.13-0.586l-37.341-49.029 L336.386,255.966z M351.143,20.53l-39.706,54.595h-112.77L154.991,20.53H351.143z M296.135,95.654l-40.936,54.583l-40.936-54.583 H296.135z M66.262,78.442l67.601-51.46l51.758,64.697l56.689,75.586l-55.308,71.9L66.262,78.442z M255.189,328.088l-0.249-0.324 l-88.61,122.408l-12.305,16.166l-15.149-53.348l-55.467-0.4l12.461-16.373l99.217-133.891l60.008-78.01l0.103,0.138 l81.995-109.328h-0.372l39.064-53.712l69.876,52.408L315.312,249.929L255.189,328.088z M377.187,413.55l-15.151,53.356 l-12.429-16.321l-81.453-105.681l55.396-72.015l96.711,123.995l12.388,16.265L377.187,413.55z"></path> </g> </g> </g></svg>
+            </a>
+          </div>
+          <div class="flex lg:hidden">
+            <button id="menu-toggle" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+              <span class="sr-only">Open main menu</span>
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </button>
+          </div>
+          <div class="hidden lg:flex lg:gap-x-12">
+            <a href="{{ url_for('index') }}" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+            <a href="{{ url_for('chatbot') }}" class="text-sm font-semibold leading-6 text-gray-900">Chatbot</a>
+            <a href="{{ url_for('symptom_checker') }}" class="text-sm font-semibold leading-6 text-gray-900">Symptom Cheker</a>
+          </div>
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a href="{{ url_for('logout') }}" class="text-sm font-semibold leading-6 text-gray-900">Log out<span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </nav>
+        <!-- Mobile menu, show/hide based on menu open state. -->
+        <div id="sidebar" class="hidden" role="dialog" aria-modal="true">
+          <!-- Background backdrop, show/hide based on slide-over state. -->
+          <div class="fixed inset-0 z-50"></div>
+          <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="flex items-center justify-between">
+              <a href="{{ url_for('index') }}" class="-m-1.5 p-1.5">
+                <span class="sr-only">Lyra</span>
+                <svg class="h-8 w-auto" fill="#4f46e5" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="#4f46e5"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M336.386,255.966L474.406,69.642L381.552,0H135.415L37.594,74.462l136.501,181.706L79.453,383.887L42.21,432.821 l81.123,0.584l22.16,78.041l37.247-48.94l72.717-100.447l77.854,101.011L370.574,512l22.158-78.033l81.13-0.586l-37.341-49.029 L336.386,255.966z M351.143,20.53l-39.706,54.595h-112.77L154.991,20.53H351.143z M296.135,95.654l-40.936,54.583l-40.936-54.583 H296.135z M66.262,78.442l67.601-51.46l51.758,64.697l56.689,75.586l-55.308,71.9L66.262,78.442z M255.189,328.088l-0.249-0.324 l-88.61,122.408l-12.305,16.166l-15.149-53.348l-55.467-0.4l12.461-16.373l99.217-133.891l60.008-78.01l0.103,0.138 l81.995-109.328h-0.372l39.064-53.712l69.876,52.408L315.312,249.929L255.189,328.088z M377.187,413.55l-15.151,53.356 l-12.429-16.321l-81.453-105.681l55.396-72.015l96.711,123.995l12.388,16.265L377.187,413.55z"></path> </g> </g> </g></svg>
+              </a>
+              <button id="menu-close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                <span class="sr-only">Close menu</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div class="mt-6 flow-root">
+              <div class="-my-6 divide-y divide-gray-500/10">
+                <div class="space-y-2 py-6">
+                  <a href="{{ url_for('index') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
+                  <a href="{{ url_for('chatbot') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Chatbot</a>
+                  <a href="{{ url_for('symptom_checker') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Symptom Cheker</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
     <div class="m-4 md:mt-32 md:mb-32 md:m-96 grid grid-cols-1 md:grid-cols-5 gap-4 overflow-y-hidden">
         
         <div id="chat" class="col-span-5 scroll-smooth bg-transparent relative pt-5 pb-5">
@@ -152,6 +205,19 @@
             scrollToBottom();
         });
 
+    </script>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const sidebar = document.getElementById('sidebar');
+    
+        menuToggle.addEventListener('click', () => {
+            sidebar.style.display = 'block';
+        });
+    
+        menuClose.addEventListener('click', () => {
+            sidebar.style.display = 'none';
+        });
     </script>
 
 </body>

@@ -160,14 +160,14 @@ def index():
         return redirect(url_for('login', next='index'))
     return render_template('index.html')
 
-# Protected route for appointment
+# Protected route for symptom_checker
 
 
-@app.route('/appointment')
-def appointment():
+@app.route('/symptom_checker')
+def symptom_checker():
     if 'username' not in session:
-        return redirect(url_for('login', next='appointment'))
-    return render_template('appointment.html')
+        return redirect(url_for('login', next='symptom_checker'))
+    return render_template('symptom_checker.html')
 
 
 @app.route('/ask', methods=['POST'])
@@ -241,7 +241,7 @@ def doubt():
         [f"{row[0]}. **{row[1]}** - *{row[2]}*" for row in rows])
     # Construct the prompt for Lyra
     prompt = f'''
-    Answer in one sentence. Refer to the database of available doctors and tell the patient which doctors are available or which doctors they must book an appointment with, based on their problem:
+    Answer in one sentence. Refer to the database of available doctors and tell the patient which doctors are available or which doctors they must book an symptom_checker with, based on their problem:
     Database:
     {database_str}
 

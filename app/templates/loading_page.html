@@ -1,46 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading...</title>
+    <title>Lyra - Healthcare Chatbot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/gsap@3.9.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background: #fff;
         }
-        .loading {
-            text-align: center;
+
+        svg {
+            font-family: 'Poppins', sans-serif;
+            position: absolute;
+            width: 100%;
+            height: 100%;
         }
-        .spinner {
-            margin: 20px auto;
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+
+        svg text {
+            text-transform: uppercase;
+            animation: stroke 5s infinite alternate;
+            stroke-width: 2;
+            stroke: rgb(29 78 216);
+            font-size: 140px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        @keyframes stroke {
+            0% {
+                fill: rgba(72, 138, 20, 0);
+                stroke: rgb(29 78 216);
+                stroke-dashoffset: 25%;
+                stroke-dasharray: 0 50%;
+                stroke-width: 2;
+            }
+
+            70% {
+                fill: rgba(72, 138, 20, 0);
+                stroke: rgb(29 78 216);
+            }
+
+            80% {
+                fill: rgba(72, 138, 20, 0);
+                stroke: rgb(29 78 216);
+                stroke-width: 3;
+            }
+
+            100% {
+                fill: rgb(37 99 235);
+                stroke: rgb(29 78 216);
+                stroke-dashoffset: -25%;
+                stroke-dasharray: 50% 0;
+                stroke-width: 0;
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: white;
         }
     </style>
 </head>
-<body>
-    <div class="loading">
-        <div class="spinner"></div>
-        <p>Loading, please wait...</p>
+
+<body class="overflow-x-hidden max-h-screen bg-white font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;">
+
+    <div id="loading-page" class="max-h-screen">
+        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+            </div>
+        </div>
+
+        <svg id="svgani" viewBox="0 0 1320 300">
+            <text x="50%" y="50%" dy=".35em" text-anchor="middle" class="">
+                Lyra
+            </text>
+        </svg>
+
+        <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
+            <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+            </div>
+        </div>
     </div>
+
     <script>
-        setTimeout(function() {
-            window.location.href = "{{ url_for('home') }}";
-        }, 2000); // Adjust the timeout duration as needed
+        const loadingpage = document.getElementById('loading-page');
+        const svgani = document.getElementById('svgani');
+
+        // GSAP animation for the text
+        gsap.to('svg text', {
+            strokeDashoffset: 0,
+            duration: 5,
+            ease: 'linear',
+            onComplete: () => {
+                // Redirect after the animation is complete
+                window.location.href = "{{ url_for('home') }}";
+            }
+        });
     </script>
 </body>
+
 </html>

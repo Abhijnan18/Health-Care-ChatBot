@@ -107,26 +107,11 @@
         
         <div id="chat" class="col-span-5 scroll-smooth bg-transparent relative pt-5 pb-5">
 
-            <h1 class="text-center text-[40px] font-semibold leading-[52px]	text-indigo-600">Symptom Checker</h1>
+            <h1 class="text-center text-4xl font-semibold leading-[52px] text-indigo-600 mt-60 md:mt-10">Symptom Checker</h1>
             <div class="text-center text-[16px] md:text-[20px] font-normal leading-[20px] md:leading-[26px] mt-[3vh] text-gray-500">Powered by Lyra</div>
             <div id="conversation" class="mt-5 mb-2 overflow-y-auto">
                 <div id="intro" class="text-center text-[20px] font-semibold leading-[26px] mt-[25%] mb-[25%] text-black">Stuck on choosing the right Specialist?<br> Let AI guide you!</div>
 
-                {% for message in conversation %}
-                {% if 'You:::' in message %}
-                <div class="max-w-[80%] mb-10 ml-auto mr-3 w-auto">
-                    <div class="user-message bg-indigo-600 text-white p-5 rounded-xl shadow-xl w-auto">
-                        <p class="m-2 mt-0 ml-0 text-sm md:text-lg text-orange-100 font-semibold">You</p>{{ message.split(':::')[1] }}
-                    </div>
-                </div>
-                {% elif 'Lyra:::' in message %}
-                <div class="max-w-[80%] mb-10 mr-auto ml-3 w-auto">
-                    <div class="lyra-message bg-slate-100 rounded-xl shadow-xl border-[1px] h-auto p-6">
-                        <p class="m-2 mt-0 ml-0 text-sm md:text-lg text-indigo-700 font-semibold">Lyra</p>{{ message.split(':::',1)[1] | safe }}
-                    </div>
-                </div>
-                {% endif %}
-                {% endfor %}
             </div>
 
             <div class="fixed bottom-0 w-full mb-5 max-w-[80%]">

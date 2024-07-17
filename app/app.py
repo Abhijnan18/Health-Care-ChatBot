@@ -68,6 +68,11 @@ conversation_count = 0
 
 
 @app.route('/')
+def loading():
+    return render_template('loading_page.html')
+
+
+@app.route('/home')
 def home():
     if 'username' in session:
         return redirect(url_for('index'))

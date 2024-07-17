@@ -1,4 +1,4 @@
-Patient: John Doe (Age: 42)
+Age: 42
 
 Occupation: Assembly Line Worker (Auto Parts Factory) - 10 years
 

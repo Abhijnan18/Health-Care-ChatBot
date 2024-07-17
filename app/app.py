@@ -53,7 +53,7 @@ def fetch_user_info(username):
 def fetch_doctors():
     db_connection = get_db_connection()
     cursor = db_connection.cursor()
-    cursor.execute("SELECT DoctorID, Name, Speciality FROM Doctors;")
+    cursor.execute("SELECT Speciality FROM Doctors;")
     rows = cursor.fetchall()
     cursor.close()
     db_connection.close()
@@ -209,28 +209,26 @@ def ask():
     prompt = f'''
     **Prompt:**
 
-    You are Lyra, a knowledgeable AI healthcare chatbot developed by Abhijnan. Your primary mission is to provide accurate and concise information solely in response to health-related queries, maintaining a friendly and empathetic tone throughout the conversation.
+    You are Lyra, a knowledgeable AI healthcare chatbot who acts like a Medical proffesional you are free to provide dieat and excericse tips. You were developed by Abhijnan. Your primary mission is to provide accurate and concise information solely in response to health-related queries.
 
     1. **General Instruction**: Your programming strictly confines responses to health-related queries. If a user poses a question unrelated to health, gently refuse to answer and redirect them to health-related topics. Consistency in adhering to this instruction is vital.
 
-    2. **Response Structure**: Create responses that are clear, informative, and relevant to the user's health inquiries. If context from previous messages is necessary, refer to the earlier conversation history provided for a more tailored response.
+    2. **Response Structure**: Create responses that are clear, informative, and relevant to the user's health inquiries. Always refer to the user's medical history provided to give personalized and accurate answers. If context from previous messages is necessary, refer to the earlier conversation history provided for a more tailored response.
 
-    3. **User Engagement**: Interact with users in a helpful and supportive manner. Your duty is not only to provide information but also to guide users toward a better understanding of their health concerns. Ensure your communication reflects a positive and caring demeanor.
-
-    4. **Questioning**: You are empowered to ask questions related to health to gather additional information, allowing you to provide more accurate and personalized responses. This enhances the user experience by tailoring information to their specific needs.
-
-    Remember, your expertise lies in the health domain. Consistently follow these instructions to create a seamless and positive user experience. Refer to the conversation history for context as needed.
+    Remember, your expertise lies in the health domain. Consistently follow these instructions to create a seamless and positive user experience. Refer to the conversation history and the user's medical history for context as needed.
 
     ---
     **User Information:**
-    Name: {user_name}
-    Medical History: {medical_history}
+    Medical Record: {medical_history}
 
     **User Message:** {user_message} If this message is not related to health or medicine, refuse to answer it.
 
-    The response you provide must be short and concise. You are strictly prohibited from giving long responses.
+    The response you provide must be short and concise. You are strictly prohibited from giving long responses. Refrain form greeting the user everytime
     ---
+    This is the chat history for you to maintain context: {conversation_history}
+
     '''
+
     response = genai.chat(messages=[prompt])
     md_text = response.last
 
@@ -252,15 +250,26 @@ def doubt():
 
     rows = fetch_doctors()
     database_str = "\n".join(
-        [f"{row[0]}. **{row[1]}** - *{row[2]}*" for row in rows])
+        [f"{row[0]}" for row in rows])
     # Construct the prompt for Lyra
-    prompt = f'''
-    Answer in one sentence. Refer to the database of available doctors and tell the patient which doctors are available or which doctors they must book an symptom_checker with, based on their problem:
-    Database:
-    {database_str}
+    # prompt = f'''
+    # You must Answer in one sentence.The patient is going to tell his problem you must tell the patient what problem/conditon/disease they might have,
+    # Along with this You must tell the patient which of the medical proffesioanl below they must consult regarding their problem.
+    # Medical Proffesional list:
+    # {database_str}
+    # And aslo provide some tips to feel better if the patiet is sick
 
-    Patient problem: {user_message}
+    # Patient problem: {user_message}
+    # '''
+    prompt = f'''
+    Respond in one sentence. Based on the users's described problem, identify the possible condition/disease, recommend a medical professional of the suitable speciality from the list below.
+    Speciality of Medical Professional List:
+    {database_str}
+    
+    You are strictly prohibited form proiding long responses your responses must only be in a sentence
+    Users's Problem: {user_message}
     '''
+
     response = genai.chat(messages=[prompt])
     md_text = response.last
 

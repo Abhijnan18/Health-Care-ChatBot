@@ -96,7 +96,7 @@ def login():
 
         if user and check_password_hash(user[0], password):
             session['username'] = username
-            return redirect(url_for(next_page))
+            return redirect(url_for('index'))
         else:
             flash('Invalid username or password')
             return redirect(url_for('login', next=next_page))
@@ -138,7 +138,7 @@ def signup():
         db_connection.close()
 
         session['username'] = username
-        return redirect(url_for(next_page))
+        return redirect(url_for('index'))
 
     next_page = request.args.get('next', 'index')
     return render_template('login_signup.html', next=next_page, login=False)
@@ -151,7 +151,7 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
-# Protected route for index
+# index route
 
 
 @app.route('/index')
@@ -159,6 +159,15 @@ def index():
     if 'username' not in session:
         return redirect(url_for('login', next='index'))
     return render_template('index.html')
+
+# Protected route for chatbot
+
+
+@app.route('/chatbot')
+def chatbot():
+    if 'username' not in session:
+        return redirect(url_for('login', next='chatbot'))
+    return render_template('chatbot.html')
 
 # Protected route for symptom_checker
 

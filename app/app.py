@@ -281,5 +281,42 @@ def doubt():
     return jsonify({'user_message': f'You::: {user_message}', 'lyra_message': f'Lyra::: {html}'})
 
 
+@app.route('/edit_medical_history', methods=['GET', 'POST'])
+def edit_medical_history():
+    if 'username' not in session:
+        return redirect(url_for('login', next='edit_medical_history'))
+
+    username = session['username']
+    user_info = fetch_user_info(username)
+    if not user_info:
+        flash('User information not found.')
+        return redirect(url_for('index'))
+
+    current_medical_history = user_info[1]
+
+    if request.method == 'POST':
+        new_medical_history = request.form['medical_history']
+
+        # Save the updated medical history to the file
+        filename = secure_filename(f"{username}_medical_history.txt")
+        filepath = os.path.join(MEDICAL_HISTORY_DIR, filename)
+        with open(filepath, 'w') as file:
+            file.write(new_medical_history)
+
+        # Update the medical history path in the database if necessary
+        db_connection = get_db_connection()
+        cursor = db_connection.cursor()
+        cursor.execute(
+            'UPDATE Users SET medical_history_path = %s WHERE username = %s', (filepath, username))
+        db_connection.commit()
+        cursor.close()
+        db_connection.close()
+
+        flash('Medical history updated successfully.')
+        return redirect(url_for('index'))
+
+    return render_template('edit_medical_history.html', medical_history=current_medical_history)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

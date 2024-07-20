@@ -1,6 +1,4 @@
 Patient Information
-
-Name: John Doe
 Age: 42
 Gender: Male
 Date of Birth: 05/12/1982

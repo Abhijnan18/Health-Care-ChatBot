@@ -1,0 +1,87 @@
+Patient Information:
+
+Name: John Wick
+DOB: January 1, 1990
+Gender: Male
+Contact: (123) 456-7890, johnwick@example.com
+Primary Care Physician:
+
+Name: Dr. Jane Smith
+Clinic: Springfield Health Clinic
+Contact: (123) 555-6789
+Insurance:
+
+Provider: HealthyLife Insurance Co.
+Policy Number: HL12345678
+Medical History
+Allergies:
+
+Lactose: Severe gastrointestinal distress and skin rashes.
+Immunizations:
+
+Up-to-date (MMR, Tetanus, Influenza, COVID-19).
+Chronic Conditions:
+
+None
+Past Medical History:
+
+Childhood Illnesses: Chickenpox, Strep Throat
+Surgeries: Appendectomy at age 12
+Medications:
+
+None
+Lifestyle:
+
+Diet: Balanced, lactose-free
+Exercise: Regular physical activity
+Smoking: Non-smoker
+Alcohol: Moderate (2-3 drinks/week)
+Substance Use: None
+Family History:
+
+Father: Hypertension
+Mother: Type 2 Diabetes
+Review of Systems
+General: Good health
+Cardiovascular: Normal
+Respiratory: Normal
+Gastrointestinal: Normal except lactose intolerance
+Neurological: Normal
+Psychological: Normal
+Skin: Occasional rashes due to lactose
+Endocrine: Normal
+
+Physical Examination
+Vitals:
+
+BP: 120/80 mmHg
+HR: 72 bpm
+RR: 16 bpm
+Temp: 98.6°F
+BMI: 23.5 kg/m²
+General Appearance: Healthy
+
+HEENT: Normal
+
+Cardiovascular: Normal
+
+Respiratory: Normal
+
+Gastrointestinal: Normal
+
+Musculoskeletal: Normal
+
+Neurological: Normal
+
+Skin: Normal
+
+Assessment and Plan
+Assessment:
+
+Healthy with lactose allergy.
+Plan:
+
+Avoid lactose.
+Carry antihistamines and epinephrine.
+Maintain regular exercise and diet.
+Next annual check up July 21, 2025

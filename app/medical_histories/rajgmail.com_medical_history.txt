@@ -1,0 +1,99 @@
+Patient Information:
+
+Name: Raj Kumar
+DOB: June 15, 1989
+Gender: Male
+Occupation: Techie
+Location: Bengaluru, India
+Contact: +91 98765 43210, rajkumar@example.com
+Primary Care Physician:
+
+Name: Dr. Ananya Gupta
+Clinic: Bengaluru Health Clinic
+Contact: +91 98765 12345
+Insurance:
+
+Provider: MediCare India
+Policy Number: MC98765432
+Medical History
+Allergies:
+
+Pollen: Causes sneezing, itchy eyes, and nasal congestion.
+Immunizations:
+
+Up-to-date (MMR, Tetanus, Influenza, COVID-19).
+Chronic Conditions:
+
+None
+Past Medical History:
+
+Childhood Illnesses: Chickenpox, Common Cold
+Injuries: Minor sprains, fully recovered
+Surgeries: None
+Medications:
+
+Antihistamines (as needed for pollen allergy)
+Lifestyle:
+
+Diet: Balanced, vegetarian
+Exercise: Regular physical activity (jogging, gym)
+Smoking: Non-smoker
+Alcohol: Occasionally (1-2 drinks/week)
+Substance Use: None
+Family History:
+
+Father: Hypertension
+Mother: Asthma
+Review of Systems
+General: Good health
+Cardiovascular: Normal
+Respiratory: Normal except for seasonal allergies
+Gastrointestinal: Normal
+Neurological: Normal
+Psychological: Normal
+Skin: Normal
+Endocrine: Normal
+
+Physical Examination
+Vitals:
+
+BP: 118/76 mmHg
+HR: 70 bpm
+RR: 15 bpm
+Temp: 98.4°F
+BMI: 22.8 kg/m²
+General Appearance: Healthy
+
+HEENT: Clear, except for occasional nasal congestion during allergy season
+
+Cardiovascular: Normal
+
+Respiratory: Normal
+
+Gastrointestinal: Normal
+
+Musculoskeletal: Normal
+
+Neurological: Normal
+
+Skin: Normal
+
+Assessment and Plan
+Assessment:
+Healthy with pollen allergy.
+
+Plan:
+Avoid exposure to pollen.
+Use antihistamines as needed.
+Continue regular exercise and balanced diet.
+Annual check-ups.
+Physician Signature:
+
+Name: Dr. Ananya Gupta
+Date: July 21, 2024
+Patient Acknowledgment:
+
+Name: Raj Kumar
+Date: July 21, 2024
+
+Next visit: Feb 2025

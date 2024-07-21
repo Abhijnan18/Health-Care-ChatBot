@@ -63,7 +63,6 @@ def fetch_doctors():
 # Set up the API key for the generative model
 genai.configure(api_key='AIzaSyCc_Mo21um64S5RnouVKUT7MLKfpUfjNZk')
 conversation_history = []
-message_limit = 50
 conversation_count = 0
 
 
@@ -261,7 +260,7 @@ def doubt():
     database_str = "\n".join([f"{row[0]}" for row in rows])
     # Construct the prompt for Lyra
     prompt = f'''
-    Respond in one sentence. Based on the user's described problem, identify the possible condition/disease, recommend a medical professional of the suitable speciality from the list below.
+    Respond in one sentence. Based on the user's described problem, identify the possible condition/disease if poosible diagnoise it, recommend a medical professional of the suitable speciality from the list below.
     Speciality of Medical Professional List:
     {database_str}
     
